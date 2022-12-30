@@ -599,7 +599,8 @@ func readInputs(input io.Reader) ([]Msg, error) {
 	for i, w := 0, 0; i < len(b); i += w {
 		r, width := utf8.DecodeRune(b[i:])
 		if r == utf8.RuneError {
-			return nil, errors.New("could not decode rune")
+			w = width
+			continue
 		}
 
 		if r == '\x1b' && len(runes) > 1 {
